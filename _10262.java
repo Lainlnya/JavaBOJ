@@ -12,7 +12,8 @@ public class _10262 {
 		List<Integer> ggung = new ArrayList<>();
 		List<Integer> seok = new ArrayList<>();
 		int K = 2;
-		double temp = 0, result = 0;
+		double result = 0.0;
+		double tempBig = 0;
 		while (K-- > 0) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
@@ -30,33 +31,39 @@ public class _10262 {
 		
 		Collections.sort(ggung);
 		Collections.sort(seok);
-		
-		System.out.println(ggung); // 16
-		System.out.println(seok); // 36
-		
+
+		System.out.println(ggung);
+		System.out.println(seok);
 		for (int i = seok.get(0); i <= seok.get(seok.size() - 1); i++) {
-			int tempSeok = Collections.frequency(seok, i);
-			double seokNum = tempSeok / seok.size(); // 석이 2일 때
-			
-			for (int j = i + 1; j <= seok.get(seok.size() - 1); j++) { // 꿍은 3, 4, 5, 6, 7, 8 다 됨
-				int tempGgng = Collections.frequency(ggung, j);
-				System.out.println("j : " + j);
-				System.out.println(tempGgng);
-				temp += tempGgng;
+			double temp = 0;
+			double tempSeok = Collections.frequency(seok, i);
+
+			for (int j = i; j <= ggung.get(ggung.size() - 1); j++) {
+				if(j >= seok.get(0)) {
+					double tempGgng = Collections.frequency(ggung, j);
+					temp += tempGgng;
+				}
+
+				if (j > seok.get(seok.size() - 1)) {
+					tempBig += Collections.frequency(ggung, j);
+				}
 			}
-			double ggungNum = temp / ggung.size();
-			result += (seokNum * ggungNum);
-			temp = 0;
+			result += (tempSeok * temp);
 		}
+		tempBig /= (seok.get(seok.size() - 1) - seok.get(0) + 1);
+
+		result -= (tempBig * ggung.size());
 		System.out.println(result);
-		
+
+		result /= (seok.size() * ggung.size());
+
+		System.out.println(result);
 		if (result > 0.5) {
-			System.out.println("Emma");
-		}else if (result == 0.5) {
-			System.out.println("Tie");
-		}
-		else {
 			System.out.println("Gunnar");
+		} else if (result < 0.5) {
+			System.out.println("Emma");
+		} else {
+			System.out.println("Tie");
 		}
 	}
 
