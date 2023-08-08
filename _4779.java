@@ -6,10 +6,9 @@ public class _4779 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		sb = new StringBuilder();
 		while (sc.hasNextInt()) {
+			sb = new StringBuilder();
 			int Total = (int)Math.pow(3, sc.nextInt());
-			
 			for (int i = 0; i < Total; i++) {
 				sb.append("-");
 			}
@@ -28,7 +27,7 @@ public class _4779 {
 			sb.setCharAt(i, ' ');
 		}
 		
-		recursive(start, left);
-		recursive(start + 2 * left, left);
+		recursive(start, left); // 왼쪽 (0 ~ 1)
+		recursive(start + 2 * left, left); // 오른쪽 (2 ~ 3)
 	}
 }
