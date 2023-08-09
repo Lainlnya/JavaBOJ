@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class _1027 {
@@ -8,31 +9,41 @@ public class _1027 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int Total = Integer.parseInt(br.readLine());
         int[] building = new int[Total];
+        int[] answer = new int[Total];
         StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        // 전체 building 배열에 저장
         for (int i = 0; i < Total; i++) {
             building[i] = Integer.parseInt(st.nextToken());
         }
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < Total; i++) {
-            int tempMax = 0;
-            double scope1 = 0, scope2 = 0;
-            for (int j = i + 1; j < Total - 1; j++) {
-                int center = building[j] * building[j + 1];
-                if (scope1 < center) {
-                    scope1 = center;
-                    tempMax++;
-                }
-            }
-
-            for (int j = i; j >= 1; j--) {
-                int center = (building[j] - building[j - 1]);
-                if (center > scope2) {
-                    scope2 = center;
-                    tempMax++;
-                }
-            }
-            max = (tempMax > max) ? tempMax : max;
+        
+        for (int i = 0; i < Total - 1; i++) { // 15
+        	answer[i]++;
+        	answer[i + 1]++;
+        	
+        	double slope = building[i + 1] - building[i];
+        	
+        	for (int j = i + 2; j < Total; j++) {
+        		double nextSlope = (double) (building[j] - building[i]) / (j - i);
+        		
+        		if (nextSlope > slope) {
+        			slope = nextSlope;
+        			answer[i]++;
+        			answer[j]++;
+        		}
+        	}
         }
+        
+        // 가장 max을 찾기 위한 변수 선언
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < answer.length; i++) {
+        	if (max < Math.max(answer[i], max)) {
+        		max = answer[i];
+        	}
+        }
+        
         System.out.println(max);
+        
     }
 }
