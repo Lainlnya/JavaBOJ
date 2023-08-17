@@ -12,17 +12,17 @@ public class _7795 {
 		StringBuilder sb = new StringBuilder();
 		for (int t = 0; t < tc; t++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int[] A = new int[Integer.parseInt(st.nextToken())]; // A배열
-			int[] B = new int[Integer.parseInt(st.nextToken())]; // B배열
+			int[] A = new int[Integer.parseInt(st.nextToken())];
+			int[] B = new int[Integer.parseInt(st.nextToken())];
 			int answer = 0;
 			
-			// A배열 할당
+
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < A.length; i++) {
 				A[i] = Integer.parseInt(st.nextToken());
 			}
 			
-			// B배열 할당
+
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < B.length; i++) {
 				B[i] = Integer.parseInt(st.nextToken());
