@@ -62,8 +62,8 @@ public class _1918 {
                             stack.push(calcu[i]);
                             break;
                         case ")":
-                            while(!stack.isEmpty() && stack.peek() != "(") { // "("를 만날 때까지 빼주고
-                                answer += stack.pop();
+                            while(!stack.isEmpty() && !stack.peek().equals("(")) { // "("를 만날 때까지 빼주고
+                            	answer += stack.pop();
                             }
                             stack.pop(); // 마지막 "("까지 빼줌
                             break;
