@@ -11,7 +11,6 @@ public class Main {
         // 각 알파벳의 index 번호가 들어갈 queue
         Queue<Integer> putA = new LinkedList<>();
         Queue<Integer> putB = new LinkedList<>();
-        Queue<Integer> putC = new LinkedList<>();
         int answer = 0;
 
         for (int i = 0; i < sentence.length; i++) {
@@ -23,22 +22,23 @@ public class Main {
                     putB.offer(i);
                     break;
                 case 'C' :
-                    putC.offer(i);
+                    if (putB.size() > 0 && putB.poll() < i) {
+                        answer++;
+                        putB.poll();
+                    }
                     break;
             }
         }
 
-        while (!putB.isEmpty()) {
-            if (!putC.isEmpty() && (putB.peek() < putC.peek())){
-                putB.poll(); putC.poll();
+        while (!putA.isEmpty() && !putB.isEmpty()) {
+            if (putA.peek() < putB.peek()) {
                 answer++;
-            } else if (!putA.isEmpty() && (putB.peek() > putA.peek())) {
                 putB.poll(); putA.poll();
-                answer++;
             } else {
                 putB.poll();
             }
         }
+
         System.out.println(answer);
     }
 }
