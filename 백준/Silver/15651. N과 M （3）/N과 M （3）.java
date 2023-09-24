@@ -1,48 +1,39 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int N; // 자연수 N
-    static int M; // 뽑을 수 M
-    static int[] arr; // 기존 배열
+    // 중복순열
+    static int total;
+    static int[] arr;
+    static int pick;
     static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
+        total = Integer.parseInt(st.nextToken());
+        pick = Integer.parseInt(st.nextToken());
+        sb = new StringBuilder();
 
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-        arr = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            arr[i] = i + 1;
-        } // 입력 끝
-
-        permuation(new ArrayList<Integer>(), M);
+        arr = new int[pick];
+        dfs(0);
         System.out.println(sb);
     }
 
-    // 순열
-    public static void permuation(ArrayList<Integer> list, int count) {
-        // 기저조건
-        if (count == 0) {
-            for (int l : list) {
-                sb.append(l + " ");
+    public static void dfs(int depth) {
+        if (depth == pick) {
+            for (int value : arr) {
+                sb.append(value + " ");
             }
             sb.append("\n");
             return;
         }
 
-        // 재귀조건
-        for (int i = 0; i < N; i++) {
-            list.add(arr[i]);
-            permuation(list, count - 1);
-            list.remove(list.size() - 1);
+        for (int i = 1; i <= total; i++) {
+            arr[depth] = i;
+            dfs(depth + 1);
         }
     }
 }
