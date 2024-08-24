@@ -1,42 +1,53 @@
 import java.util.*;
 
 class Solution {
-    static ArrayList<ArrayList<Integer>> arr;
+    static ArrayList<ArrayList<Integer>> network;
     static boolean[] visited;
-    static int count;
+    
     public int solution(int n, int[][] computers) {
-        arr = new ArrayList<ArrayList<Integer>>();
-        visited = new boolean[n];
-        count = 0;
+        network = new ArrayList<>();
+        visited = new boolean[n + 1];
         
-        for (int i = 0; i < n; i++) {
-            arr.add(new ArrayList<>());
+        int count = 0;
+        
+        // 초기화
+        for (int i = 0; i <= n; i++) {
+            network.add(new ArrayList<Integer>());
         }
         
-        // 입력 끝
-        for (int i = 0; i < computers.length; i++) {
-            for (int j = 0; j < computers[i].length; j++) {
-                if (i != j && computers[i][j] == 1) {
-                    arr.get(i).add(j);
+        // 연결 시킬 노드들 넣어주기
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (computers[i - 1][j] == 1 && ((j + 1) != i)) {
+                    network.get(i).add(j + 1);
                 }
             }
         }
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             if (!visited[i]) {
-                dfs(i);
                 count++;
-            }   
+                BFS(i);
+            }
         }
+        
         return count;
     }
     
-    public static void dfs(int idx) {
-        visited[idx] = true;
+    public static void BFS(int num) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(num);
+        visited[num] = true;
         
-        for (int next : arr.get(idx)) {
-            if (!visited[next]) {
-                dfs(next);
+        while (!queue.isEmpty()) {
+            int turn = queue.poll();
+            ArrayList<Integer> arr = network.get(turn);
+            
+            for (int ar : arr) {
+                if (!visited[ar]) {
+                    visited[ar] = true;
+                    queue.add(ar);
+                }
             }
         }
     }
