@@ -1,21 +1,27 @@
 class Solution {
-    static int count;
+    static boolean[] visited;
+    static int answer = 0;
     public int solution(int[] numbers, int target) {
-        count = 0;
-        dfs(0, 0, numbers, target);
-        
-        return count;
+        visited = new boolean[numbers.length];
+        powerSet(0, target, numbers);
+        return answer;
     }
     
-    public static void dfs(int depth, int sum, int[] numbers, int target) {
-        if (depth == numbers.length) {
-            if (sum == target) {
-                count++;
+    public static void powerSet(int idx, int target, int[] numbers) {
+        if (idx == visited.length) {
+            int sum = 0;
+            for (int i = 0; i < visited.length; i++) {
+                if (visited[i]) sum += numbers[i];
+                else sum -= numbers[i];
             }
+            
+            if (sum == target) answer++;    
             return;
         }
         
-        dfs(depth + 1, sum + numbers[depth], numbers, target);
-        dfs(depth + 1, sum - numbers[depth], numbers, target);
+        visited[idx] = true;
+        powerSet(idx + 1, target, numbers);
+        visited[idx] = false;
+        powerSet(idx + 1, target, numbers);
     }
 }
